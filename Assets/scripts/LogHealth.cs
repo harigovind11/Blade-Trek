@@ -9,30 +9,63 @@ public class LogHealth : MonoBehaviour
     public static LogHealth instance;
     
     [SerializeField] public int hitpoint = 8;
-
     [SerializeField] TextMeshProUGUI count;
+    
+    [SerializeField]  AudioClip woodChop;
+    [SerializeField]  AudioClip death;
+    [SerializeField]  AudioClip levelUp;
+    
+    private AudioSource _audioSource;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-
-        updateDisplay();
+        _audioSource = GetComponent<AudioSource>();
+        UpdateDisplay();
     }
+    
 
-    public void updateHealth()
-    {  if (hitpoint <= 1)
-             {
-             GameManager.instance.LoadNextLevel();
-                 
-             }
+    public void UpdateHealth()
+    {  if (hitpoint == 1)
+        {
+      
+            StartCoroutine(LoadNextLevel());
+        }
+        // _audioSource.Stop();
+        _audioSource.PlayOneShot(woodChop);
         hitpoint--;
-        updateDisplay();
+        UpdateDisplay();
 
     }
 
-    void updateDisplay()
+    public void GameOverAudio()
+    {
+       _audioSource.Stop(); 
+       _audioSource.PlayOneShot(death);
+    }
+    
+     IEnumerator LoadNextLevel()
+    {
+  
+    
+        
+        _audioSource.Stop();
+        _audioSource.PlayOneShot(levelUp);
+
+    
+        yield return new WaitForSeconds(1f);
+
+
+    
+       
+        GameManager.instance.LoadNextLevel();
+    }
+
+   
+
+    void UpdateDisplay()
     {
         count.text = hitpoint.ToString();
     }

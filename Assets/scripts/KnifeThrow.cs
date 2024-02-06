@@ -41,13 +41,14 @@ public class KnifeThrow : MonoBehaviour
             _rb.velocity = new Vector2(0, 0);
             _rb.constraints = RigidbodyConstraints2D.FreezePosition;
             transform.SetParent(collision.collider.transform );
-            LogHealth.instance.updateHealth();
+            LogHealth.instance.UpdateHealth();
             KnifeSpawner.instance.SpawnKnife();
             
         }
         else if (collision.gameObject.tag == "Knife")
         {
            GameManager.instance.GameOver();
+           LogHealth.instance.GameOverAudio();
         }
 
 

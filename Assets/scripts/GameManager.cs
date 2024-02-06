@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     
+    
     [SerializeField]  GameObject gameOverCanvas;
-
+   
     private void Awake()
     {
         if (instance == null)
@@ -33,16 +35,17 @@ public class GameManager : MonoBehaviour
 
    public void LoadNextLevel()
    {
+
        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
        int nextSceneIndex = currentSceneIndex + 1;
        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
        {
            nextSceneIndex = 0;
        }
-
        SceneManager.LoadScene(nextSceneIndex);
    }
 
+ 
    public void QuitGame()
    {
        Application.Quit();
