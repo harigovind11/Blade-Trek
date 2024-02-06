@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LogHealth : MonoBehaviour
 {
     public static LogHealth instance;
     
-    [SerializeField]  int hitpoint = 8;
+    [SerializeField] public int hitpoint = 8;
 
+    [SerializeField] TextMeshProUGUI count;
     private void Awake()
     {
         if (instance == null)
@@ -16,15 +18,22 @@ public class LogHealth : MonoBehaviour
             instance = this;
         }
 
-      
+        updateDisplay();
     }
 
     public void updateHealth()
-    {  if (hitpoint <= 0)
+    {  if (hitpoint <= 1)
              {
-              //TODO:Next Level
+             GameManager.instance.LoadNextLevel();
                  
              }
         hitpoint--;
+        updateDisplay();
+
+    }
+
+    void updateDisplay()
+    {
+        count.text = hitpoint.ToString();
     }
 }
