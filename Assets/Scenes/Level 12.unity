@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dd8d918ae5549e408b7133e3784520e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 17.5
+  speed: 25
 --- !u!50 &649047614
 Rigidbody2D:
   serializedVersion: 4
@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4e53ca9ca093f4ba79b40739e9bbaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitpoint: 5
+  hitpoint: 10
   count: {fileID: 6126625996530882216}
   woodChop: {fileID: 8300000, guid: d63ff323640df38488720893478d6ac2, type: 3}
   death: {fileID: 8300000, guid: 1af0bdf4bbda9db4a850fead90741a83, type: 3}
@@ -857,7 +857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnKnife: {x: 0, y: -3.8}
-  knife: {fileID: 2065909975784632242, guid: 4bb6b89bd087f5d4e825ce067875a5a6, type: 3}
+  knife: {fileID: 2065909975784632242, guid: 8fb8610c54c62f04a8fc0357632ed405, type: 3}
 --- !u!4 &1623972091
 Transform:
   m_ObjectHideFlags: 0

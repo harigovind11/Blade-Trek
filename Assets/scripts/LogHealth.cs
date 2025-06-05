@@ -7,13 +7,15 @@ using UnityEngine;
 public class LogHealth : MonoBehaviour
 {
     public static LogHealth instance;
-    
-    [SerializeField] public int hitpoint = 8;
+
+    [SerializeField] public int hitpoint;
     [SerializeField] TextMeshProUGUI count;
     
     [SerializeField]  AudioClip woodChop;
     [SerializeField]  AudioClip death;
     [SerializeField]  AudioClip levelUp;
+
+    [SerializeField] private GameObject knifeSpawner;
     
     private AudioSource _audioSource;
     private void Awake()
@@ -30,7 +32,7 @@ public class LogHealth : MonoBehaviour
     public void UpdateHealth()
     {  if (hitpoint == 1)
         {
-      
+            KnifeSpawner.instance.StopSpawning();
             StartCoroutine(LoadNextLevel());
         }
         // _audioSource.Stop();
@@ -48,18 +50,11 @@ public class LogHealth : MonoBehaviour
     
      IEnumerator LoadNextLevel()
     {
-  
-    
-        
         _audioSource.Stop();
         _audioSource.PlayOneShot(levelUp);
 
-    
         yield return new WaitForSeconds(1f);
-
-
-    
-       
+        
         GameManager.instance.LoadNextLevel();
     }
 

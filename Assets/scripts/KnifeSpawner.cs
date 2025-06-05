@@ -1,32 +1,44 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KnifeSpawner : MonoBehaviour
 {
     public static KnifeSpawner instance;
-    
-    [SerializeField]  Vector2 spawnKnife;
-    [SerializeField]  GameObject knife;
+
+    [SerializeField] Vector2 spawnKnife;
+    [SerializeField] GameObject knife;
+
+    private bool canSpawn = true;  // <-- control variable
 
     private void Awake()
     {
-          if (instance == null)
-                {
-                    instance = this;
-                }
+        if (instance == null)
+        {
+            instance = this;
+        }
     }
 
-    void OnEnable()
+    void Start()
     {
         SpawnKnife();
-
     }
 
- public   void SpawnKnife()
+    public void SpawnKnife()
     {
-        
-        GameObject knife = Instantiate(this.knife,spawnKnife,Quaternion.identity);
+        if (!canSpawn) return;  // <- prevent spawning
+
+        Instantiate(this.knife, spawnKnife, Quaternion.identity);
+    }
+
+    // Call this when hit point is reached
+    public void StopSpawning()
+    {
+        canSpawn = false;
+    }
+
+    // (Optional) You can reset spawning
+    public void ResumeSpawning()
+    {
+        canSpawn = true;
     }
 }

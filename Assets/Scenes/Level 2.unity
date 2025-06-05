@@ -469,7 +469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4e53ca9ca093f4ba79b40739e9bbaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitpoint: 5
+  hitpoint: 6
   count: {fileID: 6126625996530882216}
   woodChop: {fileID: 8300000, guid: d63ff323640df38488720893478d6ac2, type: 3}
   death: {fileID: 8300000, guid: 1af0bdf4bbda9db4a850fead90741a83, type: 3}
