@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class KnifeSpawner : MonoBehaviour
@@ -8,14 +7,13 @@ public class KnifeSpawner : MonoBehaviour
     [SerializeField] Vector2 spawnKnife;
     [SerializeField] GameObject knife;
 
-    private bool canSpawn = true;  // <-- control variable
+    private bool canSpawn = true;
 
+    public KnifeThrow currentKnife;  // <-- track current knife
+    public AimLineController aimLineController; 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
+        if (instance == null) instance = this;
     }
 
     void Start()
@@ -23,22 +21,20 @@ public class KnifeSpawner : MonoBehaviour
         SpawnKnife();
     }
 
+
+
     public void SpawnKnife()
     {
-        if (!canSpawn) return;  // <- prevent spawning
+        if (!canSpawn) return;
 
-        Instantiate(this.knife, spawnKnife, Quaternion.identity);
+        GameObject knifeObj = Instantiate(knife, spawnKnife, Quaternion.identity);
+        currentKnife = knifeObj.GetComponent<KnifeThrow>();
+
+        // Set aim line to follow the new knife
+        if (aimLineController != null)
+            aimLineController.knifeTransform = currentKnife.transform;
     }
 
-    // Call this when hit point is reached
-    public void StopSpawning()
-    {
-        canSpawn = false;
-    }
-
-    // (Optional) You can reset spawning
-    public void ResumeSpawning()
-    {
-        canSpawn = true;
-    }
+    public void StopSpawning() => canSpawn = false;
+    public void ResumeSpawning() => canSpawn = true;
 }

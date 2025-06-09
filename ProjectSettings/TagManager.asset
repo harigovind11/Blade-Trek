@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Knife
   - Log
+  - Reflective
   layers:
   - Default
   - TransparentFX
