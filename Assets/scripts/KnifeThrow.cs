@@ -96,7 +96,7 @@ public class KnifeThrow : MonoBehaviour
             _rb.velocity = Vector2.zero;
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             _rb.bodyType = RigidbodyType2D.Dynamic;
-            transform.rotation = Quaternion.identity; // <- Snap to upright
+            transform.rotation = Quaternion.identity; 
             transform.SetParent(collision.transform);
 
             LogHealth.instance.UpdateHealth();

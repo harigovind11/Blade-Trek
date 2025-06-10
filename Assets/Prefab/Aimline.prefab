@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knifeTransform: {fileID: 0}
-  maxDistance: 8
+  targetTag: Log
   maxBounces: 3
   bounceMask:
     serializedVersion: 2
