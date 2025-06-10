@@ -9,8 +9,8 @@ public class KnifeSpawner : MonoBehaviour
 
     private bool canSpawn = true;
 
-    public KnifeThrow currentKnife;  // <-- track current knife
-    public AimLineController aimLineController; 
+    public KnifeThrow currentKnife; 
+   
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -30,9 +30,7 @@ public class KnifeSpawner : MonoBehaviour
         GameObject knifeObj = Instantiate(knife, spawnKnife, Quaternion.identity);
         currentKnife = knifeObj.GetComponent<KnifeThrow>();
 
-        // Set aim line to follow the new knife
-        if (aimLineController != null)
-            aimLineController.knifeTransform = currentKnife.transform;
+     
     }
 
     public void StopSpawning() => canSpawn = false;

@@ -1,33 +1,42 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KnifeThrow : MonoBehaviour
 {
     [SerializeField] float throwPower = 10f;
     [SerializeField] float despawnDistance = 12f;
-
-    public GameObject aimLineObject;
     
     private Rigidbody2D _rb;
-    private bool isActive = true;
+    private bool _isActive = true;
 
-    private bool rotateLeft = false;
-    private bool rotateRight = false;
+    private bool _rotateLeft = false;
+    private bool _rotateRight = false;
     [SerializeField] float rotationSpeed = 90f;
 
+    private List<Vector2> _pathPoints;
+    private int _pathIndex = 0;
+    [SerializeField] float travelSpeed = 10f;
+
+    [SerializeField] AimLineController aimLinePrefab;
+    private AimLineController _aimLine;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         StartCoroutine(AutoDespawn()); // optional fallback
+ 
+        _aimLine = Instantiate(aimLinePrefab); // Create a unique aimline
+        _aimLine.SetKnife(this.transform);     // Link to this knife
+        
     }
 
     void Update()
     {
-        if (!isActive) return;
+        if (!_isActive) return;
 
         // Rotate while holding buttons
-        if (rotateLeft)
+        if (_rotateLeft)
             transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
-        else if (rotateRight)
+        else if (_rotateRight)
             transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
 
         // Offscreen position check
@@ -35,34 +44,58 @@ public class KnifeThrow : MonoBehaviour
         {
             Missed();
         }
+        
+        // Handle path movement
+        if (!_isActive || _pathPoints == null || _pathIndex >= _pathPoints.Count)
+            return;
+
+        Vector2 target = _pathPoints[_pathIndex];
+        Vector2 moveDir = (target - (Vector2)transform.position).normalized;
+        float step = travelSpeed * Time.deltaTime;
+
+        if (Vector2.Distance(transform.position, target) < step)
+        {
+            transform.position = target;
+            _pathIndex++;
+        }
+        else
+        {
+            transform.position += (Vector3)(moveDir * step);
+            float angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
-    public void SetRotateLeft(bool state) => rotateLeft = state;
-    public void SetRotateRight(bool state) => rotateRight = state;
+    public void SetRotateLeft(bool state) => _rotateLeft = state;
+    public void SetRotateRight(bool state) => _rotateRight = state;
 
+   
     public void ThrowKnife()
     {
-        if (!isActive) return;
-  
-        Vector2 dir = transform.up.normalized; // assuming knife faces UP in the sprite
+        if (!_isActive || _aimLine == null) return;
+
+        _pathPoints = new List<Vector2>(_aimLine.GetReflectionPath());
+        _pathIndex = 1;
+        _isActive = true;
+
+        _rb.bodyType = RigidbodyType2D.Kinematic;
         _rb.velocity = Vector2.zero;
-        _rb.constraints = RigidbodyConstraints2D.None;
-        _rb.AddForce(dir * throwPower, ForceMode2D.Impulse);
-        
-        if (aimLineObject != null)
-            aimLineObject.SetActive(false);
+
+        _aimLine.Hide(); // hide after throw
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!isActive) return;
+        if (!_isActive) return;
 
         if (collision.gameObject.CompareTag("Log"))
         {
-            isActive = false;
+            _isActive = false;
+            
             _rb.velocity = Vector2.zero;
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
-
+            _rb.bodyType = RigidbodyType2D.Dynamic;
             transform.rotation = Quaternion.identity; // <- Snap to upright
             transform.SetParent(collision.transform);
 
@@ -72,26 +105,37 @@ public class KnifeThrow : MonoBehaviour
 
         else if (collision.gameObject.CompareTag("Knife"))
         {
-            isActive = false;
+            _isActive = false;
             GameManager.instance.GameOver();
             LogHealth.instance.GameOverAudio();
-        }else if (collision.gameObject.CompareTag("Reflective"))
-        {
-            // Get normal of the first contact point
-            Vector2 normal = collision.contacts[0].normal;
-
-            // Reflect current velocity across the normal
-            _rb.velocity = Vector2.Reflect(_rb.velocity, normal);
-
-            // Optional: add small boost to keep speed consistent after bounce
-            _rb.velocity = _rb.velocity.normalized * throwPower;
         }
+        else if (collision.gameObject.CompareTag("Reflective"))
+    {
+    // Get normal from contact point
+    Vector2 normal = collision.contacts[0].normal;
+
+    // Reflect velocity direction
+    Vector2 incomingDir = _rb.velocity.normalized;
+    Vector2 reflectDir = Vector2.Reflect(incomingDir, normal);
+
+    // Set new velocity in reflected direction
+    _rb.velocity = reflectDir * throwPower;
+
+    // Freeze angular rotation if it's spinning
+    _rb.freezeRotation = true;
+    _rb.angularVelocity = 0;
+
+    // Rotate the knife to match the new direction
+    float angle = Mathf.Atan2(reflectDir.y, reflectDir.x) * Mathf.Rad2Deg - 90f;
+    transform.rotation = Quaternion.Euler(0, 0, angle);
+}
+
     }
 
     private void Missed()
     {
-        if (!isActive) return;
-        isActive = false;
+        if (!_isActive) return;
+        _isActive = false;
         KnifeSpawner.instance.SpawnKnife();
         Destroy(gameObject);
     }

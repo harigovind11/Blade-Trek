@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     
     
     [SerializeField]  GameObject gameOverCanvas;
-   
+    [SerializeField]  GameObject buttonsCanvas;
     private void Awake()
     {
         if (instance == null)
@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
   public  void GameOver()
     {
+        buttonsCanvas.SetActive(false);
         gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
         
