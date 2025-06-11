@@ -77,11 +77,11 @@ public class KnifeThrow : MonoBehaviour
         _pathPoints = new List<Vector2>(_aimLine.GetReflectionPath());
         _pathIndex = 1;
         _isActive = true;
-
+        _aimLine.Hide();
         _rb.bodyType = RigidbodyType2D.Kinematic;
         _rb.velocity = Vector2.zero;
 
-        _aimLine.Hide(); // hide after throw
+       // hide after throw
     }
 
 

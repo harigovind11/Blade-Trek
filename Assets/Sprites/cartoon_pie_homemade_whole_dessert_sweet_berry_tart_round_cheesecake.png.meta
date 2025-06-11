@@ -131,7 +131,7 @@ TextureImporter:
         width: 303
         height: 306
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 330
         height: 310
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
         width: 310
         height: 308
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
         width: 295
         height: 297
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -202,6 +202,48 @@ TextureImporter:
       bones: []
       spriteID: 12e8775636c6c47458fb058372d596b1
       internalID: 358800752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_4
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 104
+        width: 311
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2812245b53b8fe24a9cfda0609168f81
+      internalID: 394651573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_5
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 114
+        width: 293
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59710ad47b58b847a6f3b492d010f07
+      internalID: -597597311
       vertices: []
       indices: 
       edges: []
@@ -221,6 +263,8 @@ TextureImporter:
       cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_1: -789026058
       cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_2: 2123806843
       cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_3: 358800752
+      cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_4: 394651573
+      cartoon_pie_homemade_whole_dessert_sweet_berry_tart_round_cheesecake_5: -597597311
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
