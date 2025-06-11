@@ -4,17 +4,26 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class AimLineController : MonoBehaviour
 {
+    private static AimLineController _instance;
+    
     public Transform knifeTransform;
     public string targetTag = "Log";
-    public int maxBounces = 3;
+    public int maxBounces = 10;
     public LayerMask bounceMask;
 
     private LineRenderer _lineRenderer;
     private List<Vector2> _reflectionPoints = new List<Vector2>();
     private Transform _targetTransform;
+    
 
     void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(_instance.gameObject);
+        }
+        _instance = this;
+
         _lineRenderer = GetComponent<LineRenderer>();
     }
 
@@ -45,7 +54,6 @@ public class AimLineController : MonoBehaviour
 
         Vector2 origin = knifeTransform.position;
         Vector2 direction = knifeTransform.up.normalized;
-        Vector2 target = _targetTransform.position;
 
         _reflectionPoints.Add(origin);
         _lineRenderer.positionCount = 1;
@@ -53,35 +61,39 @@ public class AimLineController : MonoBehaviour
 
         int pointIndex = 1;
 
-        while (pointIndex <= maxBounces)
+        for (int i = 0; i < maxBounces; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, Mathf.Infinity, bounceMask);
 
             if (hit.collider != null)
             {
                 Vector2 hitPoint = hit.point;
+                string hitTag = hit.collider.tag;
 
-                float distToTarget = Vector2.Dot(target - origin, direction);
-                float distToHit = Vector2.Dot(hitPoint - origin, direction);
-                if (distToTarget <= distToHit)
-                {
-                    AddPoint(target, pointIndex);
-                    break;
-                }
+                Debug.Log($"Ray hit: {hit.collider.name}, tag: {hitTag}");
 
                 AddPoint(hitPoint, pointIndex);
 
+                // ❗ STOP if we hit Target or Obstacle
+                if (hitTag == targetTag || hitTag == "Obstacle")
+                    break;
+
+                // Reflect off surface (like wall)
                 direction = Vector2.Reflect(direction, hit.normal);
                 origin = hitPoint;
                 pointIndex++;
             }
             else
             {
-                AddPoint(target, pointIndex);
+                // No hit, just draw long line forward
+                AddPoint(origin + direction * 20f, pointIndex);
                 break;
             }
         }
+
+        _lineRenderer.enabled = true;
     }
+
 
     private void AddPoint(Vector2 point, int index)
     {

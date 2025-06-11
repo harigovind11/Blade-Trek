@@ -257,7 +257,7 @@ TextureImporter:
         width: 216
         height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -265,6 +265,111 @@ TextureImporter:
       bones: []
       spriteID: 47880b6f8a494d246bb069f8e25a1bbe
       internalID: 1105960524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: set-game-icons_7
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 354
+        width: 236
+        height: 231
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce74e6d01b8564b44b4b516e7f65f1bd
+      internalID: 1876343630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: set-game-icons_8
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1278
+        width: 280
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f311407f09c35224aa06950770499770
+      internalID: 562482062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: set-game-icons_9
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 1278
+        width: 278
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0570e0fc4bed049468477f876e67dac2
+      internalID: 892360268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: set-game-icons_10
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 982
+        width: 264
+        height: 265
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9e853646bd0c1428b2f2f5e1920775
+      internalID: -1105330096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: set-game-icons_11
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 30
+        width: 294
+        height: 292
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e79596aa48e08842847aad014d7e938
+      internalID: 287446879
       vertices: []
       indices: 
       edges: []
@@ -282,11 +387,16 @@ TextureImporter:
     nameFileIdTable:
       set-game-icons_0: -313716838
       set-game-icons_1: -98278478
+      set-game-icons_10: -1105330096
+      set-game-icons_11: 287446879
       set-game-icons_2: -1840598524
       set-game-icons_3: -103459610
       set-game-icons_4: 1307180376
       set-game-icons_5: -75490625
       set-game-icons_6: 1105960524
+      set-game-icons_7: 1876343630
+      set-game-icons_8: 562482062
+      set-game-icons_9: 892360268
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

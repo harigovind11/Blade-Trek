@@ -5,7 +5,7 @@ public class KnifeThrow : MonoBehaviour
 {
     [SerializeField] float throwPower = 10f;
     [SerializeField] float despawnDistance = 12f;
-    
+
     private Rigidbody2D _rb;
     private bool _isActive = true;
 
@@ -19,14 +19,14 @@ public class KnifeThrow : MonoBehaviour
 
     [SerializeField] AimLineController aimLinePrefab;
     private AimLineController _aimLine;
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         StartCoroutine(AutoDespawn()); // optional fallback
- 
+
         _aimLine = Instantiate(aimLinePrefab); // Create a unique aimline
-        _aimLine.SetKnife(this.transform);     // Link to this knife
-        
+        _aimLine.SetKnife(this.transform); // Link to this knife
     }
 
     void Update()
@@ -44,7 +44,7 @@ public class KnifeThrow : MonoBehaviour
         {
             Missed();
         }
-        
+
         // Handle path movement
         if (!_isActive || _pathPoints == null || _pathIndex >= _pathPoints.Count)
             return;
@@ -69,7 +69,7 @@ public class KnifeThrow : MonoBehaviour
     public void SetRotateLeft(bool state) => _rotateLeft = state;
     public void SetRotateRight(bool state) => _rotateRight = state;
 
-   
+
     public void ThrowKnife()
     {
         if (!_isActive || _aimLine == null) return;
@@ -92,15 +92,22 @@ public class KnifeThrow : MonoBehaviour
         if (collision.gameObject.CompareTag("Log"))
         {
             _isActive = false;
-            
+
             _rb.velocity = Vector2.zero;
             _rb.constraints = RigidbodyConstraints2D.FreezeAll;
             _rb.bodyType = RigidbodyType2D.Dynamic;
-            transform.rotation = Quaternion.identity; 
+            transform.rotation = Quaternion.identity;
             transform.SetParent(collision.transform);
 
             LogHealth.instance.UpdateHealth();
             KnifeSpawner.instance.SpawnKnife();
+        }
+        
+        else if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            _isActive = false;
+            GameManager.instance.GameOver();
+            LogHealth.instance.GameOverAudio();
         }
 
         else if (collision.gameObject.CompareTag("Knife"))
@@ -109,27 +116,27 @@ public class KnifeThrow : MonoBehaviour
             GameManager.instance.GameOver();
             LogHealth.instance.GameOverAudio();
         }
+        
         else if (collision.gameObject.CompareTag("Reflective"))
-    {
-    // Get normal from contact point
-    Vector2 normal = collision.contacts[0].normal;
+        {
+            // Get normal from contact point
+            Vector2 normal = collision.contacts[0].normal;
 
-    // Reflect velocity direction
-    Vector2 incomingDir = _rb.velocity.normalized;
-    Vector2 reflectDir = Vector2.Reflect(incomingDir, normal);
+            // Reflect velocity direction
+            Vector2 incomingDir = _rb.velocity.normalized;
+            Vector2 reflectDir = Vector2.Reflect(incomingDir, normal);
 
-    // Set new velocity in reflected direction
-    _rb.velocity = reflectDir * throwPower;
+            // Set new velocity in reflected direction
+            _rb.velocity = reflectDir * throwPower;
 
-    // Freeze angular rotation if it's spinning
-    _rb.freezeRotation = true;
-    _rb.angularVelocity = 0;
+            // Freeze angular rotation if it's spinning
+            _rb.freezeRotation = true;
+            _rb.angularVelocity = 0;
 
-    // Rotate the knife to match the new direction
-    float angle = Mathf.Atan2(reflectDir.y, reflectDir.x) * Mathf.Rad2Deg - 90f;
-    transform.rotation = Quaternion.Euler(0, 0, angle);
-}
-
+            // Rotate the knife to match the new direction
+            float angle = Mathf.Atan2(reflectDir.y, reflectDir.x) * Mathf.Rad2Deg - 90f;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 
     private void Missed()

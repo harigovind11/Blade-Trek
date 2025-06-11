@@ -50,7 +50,7 @@ MonoBehaviour:
   maxBounces: 3
   bounceMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 200
 --- !u!120 &2646533236474970534
 LineRenderer:
   serializedVersion: 2
